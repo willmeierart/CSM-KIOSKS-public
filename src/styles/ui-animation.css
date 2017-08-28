@@ -1,0 +1,189 @@
+.header-enter{
+  opacity:0;
+  transform:translateY(-20px);
+ }
+.header-enter.header-enter-active{
+  opacity:1;
+  transform:translateY(0);
+  transition: transform 1s , opacity 1s ;
+}
+.header-leave{
+  opacity:1;
+  transform:translateY(0);
+}
+.header-leave.header-leave-active{
+  opacity:0;
+  transform:translateY(-20px);
+  transition: transform 1s , opacity 1s ;
+}
+
+.thumbnail-enter{
+  opacity:0;
+  transform:translateY(-50px);
+ }
+.thumbnail-enter.thumbnail-enter-active{
+  opacity:1;
+  transform:translateY(0);
+  transition: transform 1s , opacity 1s ;
+}
+.thumbnail-leave{
+  opacity:1;
+  transform:translateY(0);
+}
+.thumbnail-leave.thumbnail-leave-active{
+  opacity:0;
+  transform:translateY(-50px);
+  transition: transform 1s , opacity 1s ;
+}
+.thumbnail-appear{
+  opacity:0;
+  transform:translateY(-50px);
+}
+.thumbnail-appear.thumbnail-appear-active{
+  opacity:1;
+  transform:translateY(0);
+  transition: transform 1s , opacity 1s ;
+}
+
+.thumbnail-text-enter{opacity:0; transform:translateY(-40px);
+}
+.thumbnail-text-enter.thumbnail-text-enter-active{ opacity:1;transform:translateY(0);
+ transition: transform 1s , opacity 1s ;
+}
+.thumbnail-text-leave{
+  opacity:1;
+  transform:translateY(0);
+}
+.thumbnail-text-leave.thumbnail-text-leave-active{
+  opacity:0;
+  transform:translateY(-40px);
+  transition: transform 1s , opacity 1s ;
+}
+.thumbnail-text-appear{
+  opacity:0;
+  transform:translateY(-40px);
+}
+.thumbnail-text-appear.thumbnail-text-appear-active{
+  opacity:1;
+  transform:translateY(0);
+  transition: transform 1s , opacity 1s ;
+ }
+
+.index-enter{ opacity:0; transform:translateY(-20px);
+}
+.index-enter.index-enter-active{ opacity:1; transform:translateY(0);
+   transition: transform 1s , opacity 1s ;
+ }
+.index-leave{ opacity:1; transform:translateY(0);
+}
+.index-leave.index-leave-active{ opacity:0; transform:translateY(-20px);
+   transition: transform 1s , opacity 1s ;
+ }
+.index-appear{ opacity:0; transform:translateY(-20px);
+}
+.index-appear.index-appear-active{ opacity:1; transform:translateY(0);
+   transition: transform 1s , opacity 1s ;
+ }
+
+.list-fade-enter{transform:translateY(40px);
+   opacity:0;
+ }
+.list-fade-enter.list-fade-enter-active{transform:translateY(0);
+   opacity:1;
+     transition: transform 1s, opacity 1s ;
+   }
+.list-fade-leave{transform:translateY(0);
+   opacity:1;
+ }
+.list-fade-leave.list-fade-leave-active{transform:translateY(-40px);
+   opacity:0;
+    transition: transform 1s ease-in, opacity 1s ease-in;
+  }
+.list-fade-appear{transform:translateY(40px);
+   opacity:0;
+ }
+.list-fade-appear.list-fade-appear-active{transform:translateY(0);
+   opacity:1;
+     transition: transform 1s, opacity 1s ;
+}
+
+.bg-fade-leave{
+  opacity:1;
+}
+.bg-fade-leave.bg-fade-leave-active{
+  opacity:0;
+  transition: opacity .66s ;
+ }
+ .bg-fade-enter{
+   opacity:0;
+ }
+ .bg-fade-enter.bg-fade-enter-active{
+   opacity:1;
+   transition: opacity .66s ;
+  }
+ .bg-fade-appear{
+   opacity:0;
+ }
+ .bg-fade-appear.bg-fade-appear-active{
+   opacity:1;
+   transition: opacity .66s ;
+ }
+
+ .master-fade-enter{
+   opacity:0;
+ }
+ .master-fade-enter.master-fadeout-enter-active{
+   opacity:1;
+   transition: opacity 1s ;
+  }
+ .master-fade-leave{
+   opacity:1;
+ }
+ .master-fade-leave.master-fadeout-leave-active{
+   opacity:0;
+   transition: opacity 1s ;
+}
+
+.btn-fade-enter{
+  opacity:0;
+}
+.btn-fade-enter.btn-fade-enter-active{
+  opacity:1;
+  transition: opacity 0.66s ;
+}
+.btn-fade-leave{
+  opacity:1;
+}
+.btn-fade-leave.btn-fade-leave-active{
+  opacity:0;
+  transition: opacity 0.66s ;
+ }
+.btn-fade-appear{
+  opacity:0;
+}
+.btn-fade-appear.btn-fade-appear-active{
+  opacity:1;
+  transition: opacity 0.66s ;
+}
+
+.controls-fade-enter{transform:translateY(30px);
+   opacity:0;
+ }
+.controls-fade-enter.controls-fade-enter-active{transform:translateY(0);
+   opacity:1;
+     transition: transform 1s, opacity 1s ;
+   }
+.controls-fade-leave{transform:translateY(0);
+   opacity:1;
+ }
+.controls-fade-leave.controls-fade-leave-active{transform:translateY(30px);
+   opacity:0;
+    transition: transform 1s, opacity 1s ;
+  }
+.controls-fade-appear{transform:translateY(30px);
+   opacity:0;
+ }
+.controls-fade-appear.controls-fade-appear-active{transform:translateY(0);
+   opacity:1;
+     transition: transform 1s, opacity 1s ;
+}

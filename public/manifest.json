@@ -1,0 +1,6 @@
+{
+  "short_name": "CSM01",
+  "name": "CSM Interfaces v01",
+  "start_url": "./index.html",
+  "display": "standalone"
+}
