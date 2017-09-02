@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import { persistStore } from 'redux-persist'
 import { Provider } from 'react-redux'
-import localForage from 'localforage'
+// import localForage from 'localforage'
 import Loader from 'react-loader'
 
-import Store from './store'
+import Store from './Store'
 import App from '../containers/App'
 
 export default class AppProvider extends Component{
@@ -14,7 +14,7 @@ export default class AppProvider extends Component{
   }
 
   componentWillMount(){
-    persistStore(Store, {storage:localForage}, ()=>{
+    persistStore(Store, {}, ()=>{
       this.setState({rehydrated:true})
   })}
 

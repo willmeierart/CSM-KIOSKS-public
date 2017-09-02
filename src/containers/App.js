@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter, Route, Switch} from 'react-router-dom'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import {HashRouter, Route, Switch} from 'react-router-dom'
 import {RouteTransition} from 'react-router-transition'
 import {spring} from 'react-motion'
 import {binder} from '../utils'
@@ -18,12 +17,17 @@ import NavWrapper from '../components/Structure/NavWrapper'
 class App extends Component {
   constructor(props){
     super(props)
-    if(!this.props.data.CSMdata[0]){this.props.onFetchCSMdata()}
+    if(!this.props.data.CSMdata[0]){
+      this.props.onFetchCSMdata()
+    }
     const {CSMdata} = this.props.data
     let freshy = []
     async function fresh(){freshy = await fetchCSMdata().payload}
     fresh().then(()=>{
-      if(CSMdata[0]!==freshy.data[0]){this.props.onFetchCSMdata()}
+      if(CSMdata[0]!==freshy.data[0]){
+        this.props.onFetchCSMdata()
+        this.props.onSelectKioskSet(this.props.data.CSMdata[0])
+      }
     })
     this.state = {showIndex:false, showHeader:true}
     binder(this,['showNav', 'hideNav', 'showHeader', 'hideHeader', 'toggleNav'])
@@ -31,11 +35,7 @@ class App extends Component {
   componentWillMount(){
     const data = this.props.data.CSMdata
     const {selections} = this.props.data
-    const initSet = selections.set
-    if (initSet.set){
-      const newSet = data.find(one=>one.set.title===initSet.set.title)
-      if(initSet!==newSet){this.props.onSelectKioskSet(newSet)}
-    } else {this.props.onSelectKioskSet(data[0])}
+    if(selections===undefined){this.props.onSelectKioskSet(data[0])}
   }
   toggleNav(){this.setState({showIndex:this.state.showIndex?false:true})}
   showNav(){this.setState({showIndex:true})}
@@ -49,12 +49,12 @@ class App extends Component {
       return {title:set.set.title,index:i}
     })
     const {selections} = this.props.data
-    const {set}=selections.set
+    const {set} = selections.set
     const {category} = selections.category
     return (
       <div className="App">
-        <BrowserRouter history={this.history} basename="/kiosk">
-        <div>
+        <HashRouter basename="/kiosk">
+          <div>
           <NavWrapper
             onShowHeader={this.showHeader}
             showHeader={this.state.showHeader}
@@ -66,8 +66,14 @@ class App extends Component {
             onSelectVideo={this.props.onSelectVideo}
             onSelectCategory={this.props.onSelectCategory}/>
           <main>
+          <Route exact path="/admin" render={()=>{return(
+            <AdminMenu data={this.props.data.CSMdata}
+              showHeader={this.showHeader}
+              adminSetList={adminSetList}
+              onSelectKioskSet={this.props.onSelectKioskSet}
+            />)}}/>
           <Route render={({location,history,match})=>{return(
-            <div><Route path="/videos" render={()=>{return(
+            <div><Route exact path="/videos" render={()=>{return(
               <FullScreenPlayer set={set}
                 selections={selections}
                 category={category} navOpen={this.state.showIndex}
@@ -82,40 +88,25 @@ class App extends Component {
                   atActive={{ opacity: spring(1,{stiffness:300,damping:40}), translateY:spring(0,{stiffness:300,damping:40}), translateZ:0}}
                   mapStyles={styles=>({opacity:styles.opacity, transform:`translateY(${styles.translateY}px) translateZ(${styles.translateZ})`})}>
                 <Switch key={location.pathname} location={location}>
-                  <Route path="/categories" render={()=>{return (
+                  <Route exact path="/categories" render={()=>{return (
                     <CategoriesPage set={set} category={category}
                       onSelectCategory={this.props.onSelectCategory}
                     />)}}/>
-                  <Route path="/admin" render={()=>{return(
-                    <AdminMenu data={this.props.data.CSMdata}
-                      showHeader={this.showHeader}
-                      adminSetList={adminSetList}
-                      onSelectKioskSet={this.props.onSelectKioskSet}
-                    />)}}/>
                   <Route exact path="/" render={()=>{return (
+                    <div>{set &&
                     <FrontPage set={set}
                       showHeader={this.showHeader}
+                      onSelectKioskSet={this.props.onSelectKioskSet}
                       onSelectCategory= {this.props.onSelectCategory}
-                    />)}}/>
+                    />}</div>)}}/>
                 </Switch>
-
               </RouteTransition>
-              {/*<ReactCSSTransitionGroup
-                  component="div"
-                  transitionName="bg-fade"
-                  transitionEnterTimeout={660}
-                  transitionLeaveTimeout={660}
-                  transitionAppearTimeout={660}
-                  transitionAppear={true}>
-                {location.pathname=='/'&&
-                  <div style={{position:'absolute', width:'100vw', height:'150vh', backgroundColor:'black', zIndex:'-1'}}/>}
-              </ReactCSSTransitionGroup>*/}
             </div>
           )}}/>
         </main>
-        </div>
-      </BrowserRouter>
       </div>
+    </HashRouter>
+    </div>
     )
   }
 }

@@ -1,7 +1,14 @@
 import {SELECT_KIOSK_SET, SELECT_CATEGORY, SELECT_VIDEO} from '../actions'
 
 const initialState = {
-  set:{},
+  set:{
+    set:{
+      categories:[{category:{
+        title:'',
+        videos:[]
+      }}]
+    }
+  },
   category:{},
   video: {}
 }

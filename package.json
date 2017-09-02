@@ -1,7 +1,7 @@
 {
   "name": "react-v01",
   "version": "0.1.0",
-  "homepage": "/kiosk/",
+  "homepage": "http://video.clyffordstillmuseum.org/kiosk",
   "private": true,
   "dependencies": {
     "@vimeo/player": "^2.1.0",
@@ -30,6 +30,7 @@
     "react-scrolllock": "^1.0.8",
     "react-web-animation": "^0.3.4",
     "redux": "^3.7.2",
+    "redux-async-initial-state": "^0.2.1",
     "redux-logger": "^3.0.6",
     "redux-persist": "^4.9.1",
     "redux-promise": "^0.5.3",

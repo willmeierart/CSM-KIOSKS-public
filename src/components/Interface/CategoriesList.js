@@ -2,7 +2,10 @@ import React, {Component} from 'react'
 import ListModule from './CategoriesListModule'
 
 export default class CategoriesList extends Component{
-  handleClick(i){this.props.onSelectCategory(this.props.set.categories[i])}
+  handleClick(i){
+    this.props.onSelectCategory(this.props.set.categories[i])
+    this.props.resetRange()
+  }
   renderCondition(id, category, url){
     return(
       <ListModule key={`second${id}`}

@@ -17,9 +17,11 @@ class CategoriesPage extends Component{
       top:true,
       bottom:false
     }
-    binder(this,['scrollUp','scrollDown','showButtons','getNumThumbs'])
+    binder(this,['scrollUp','scrollDown','showButtons','getNumThumbs','resetRange'])
   }
+  componentWillMount(){this.getNumThumbs()}
   componentDidMount(){this.getNumThumbs()}
+  resetRange(){this.setState({range:[1,6]})}
   showButtons(bool){this.setState({showButtons:bool})}
   getNumThumbs(){
     const {videos} = this.props.category
@@ -50,7 +52,8 @@ class CategoriesPage extends Component{
         <div className="categories">
           <h3>Topics</h3>
           <CategoriesList {...this.props}
-            thumbList={true}/>
+            thumbList={true}
+            resetRange={this.resetRange}/>
         </div>
         <ReactCSSTransitionGroup
           component="FirstChild"
@@ -75,7 +78,8 @@ class CategoriesPage extends Component{
           showHeader={this.props.showHeader}
           showButtons={this.showButtons}
           numThumbs={this.state.numThumbs}
-          getNumThumbs={this.getNumThumbs}/>
+          getNumThumbs={this.getNumThumbs}
+          resetRange={this.resetRange}/>
         <div className='thumbnails-scrim'/>
     </div>)
   }

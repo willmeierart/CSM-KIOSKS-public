@@ -70,7 +70,7 @@ export default class Controls extends Component {
               <span className="prev-next-controls">
                 {exists(this.state.prevVid) &&
                   <Link className="link"
-                    // onClick={()=>{this.selectVideo(this.state.prevVid)}}
+                    onClick={(e)=>{this.selectVideo(this.state.prevVid)}}
                     to='/videos'
                     rel="prev">
                     <Prev prevVid={this.prevVideo}/>
@@ -79,8 +79,8 @@ export default class Controls extends Component {
                 &nbsp; <strong>{parseInt(this.state.index,10)+1}</strong> / {this.props.validVids.length}&nbsp;
                 {exists(this.state.nextVid) &&
                   <Link className="link"
-                    onClick={(e)=>{this.selectVideo(this.state.nextVid)}}
                     to='/videos'
+                    onClick={(e)=>{this.selectVideo(this.state.nextVid)}}
                     rel="next">
                     <Next nextVid={this.nextVideo}/>
                   </Link>
@@ -99,7 +99,7 @@ export default class Controls extends Component {
                   onClick={this.showVolume}
                   volume={this.props.playback.volume}
                   changeVolume={this.props.changeVolume}/>}
-                <CC addCaptions={this.props.addCaptions}/>
+                {this.props.captionsAvail && <CC addCaptions={this.props.addCaptions}/>}
               </span>
           </span>
         </div>
