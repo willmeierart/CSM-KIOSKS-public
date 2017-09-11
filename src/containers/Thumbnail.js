@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import {selectVideo} from '../actions'
-import {formatTime} from '../utils'
+import {formatTime, URLformat} from '../utils'
 
 class Thumbnail extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class Thumbnail extends Component {
     return (
       <div>
         {video &&
-        <Link className='item link' onClick={this.selectVideo} to='/videos'>
+        <Link className='item link' onClick={this.selectVideo} to={`/videos/${URLformat(video.title)}`}>
           <div className='ratio'></div>
           <div className='inner'>
             <ReactCSSTransitionGroup

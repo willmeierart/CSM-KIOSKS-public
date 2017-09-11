@@ -16,7 +16,14 @@ let timer2
 class FullScreenPlayer extends Component {
   constructor(props) {
     super(props)
-    this.state = { showControls: true, fade2black:true, textTrack:{kind:{},lang:{},src:{}},captionsOn:false}
+    this.state = {
+      showControls: true,
+      fade2black:true,
+      tracks:[],
+      textTrack:{kind:{},lang:{},src:{}},
+      captionsOn:false,
+      currentID:0
+    }
     binder(this, ['seekNewTime', 'handleStateChange', 'selectVid','toggleCaptions', 'addCaptions',  'showControls', 'controlsTimeout', 'blackoutTimeout', 'playVid', 'pauseVid','toggleControls','clearCaptions'])
   }
   componentWillMount() {
@@ -25,10 +32,13 @@ class FullScreenPlayer extends Component {
   componentWillUnmount(){
     if(timer){clearTimeout(timer)}
     this.props.showHeader()
+      this.setState({textTrack:{kind:{},lang:{},src:''},captionsOn:false})
+    this.clearCaptions()
   }
   componentDidMount() {
     const { actions } = this.refs.player
-    // const {id} = this.props.selections.video
+    const {id} = this.props.selections.video
+    const { video } = this.refs.player.video
     if(!this.props.data.video.mp4){
       if(this.props.category){
         this.props.history.push( `/categories/${URLformat(this.props.category.title)}`)
@@ -40,18 +50,43 @@ class FullScreenPlayer extends Component {
     const disableFuncs = (Fs) => Fs.forEach(f => this.refs.player.actions[f] = () => null)
     disableFuncs(['toggleFullscreen', 'toggleFullscreenChange', 'handleFullscreenChange'])
     actions.handleEnd=()=>{
+      this.clearCaptions()
       this.props.history.push(`/categories`)
     }
+    this.setState({textTrack:{kind:{},lang:{},src:''},captionsOn:false})
     this.clearCaptions()
+    // this.props.onFetchCaptions(id)
   }
-  componentWillReceiveProps(newProps,props){
+  componentWillReceiveProps(newProps){
     const { captions } = newProps.data.video
-    const { trackElement } = this.refs
     const { video } = this.refs.player.video
     const {src} = this.state.textTrack
-    if(newProps.selections.video.id!==this.props.selections.video.id){
-      this.selectVid(newProps.selections.video)
+    const {id} = this.props.selections.video
+    const fetchEm = this.props.onFetchCaptions
+    const clearEm = this.clearCaptions
+    const forceIt = this.forceUpdate
+    const newCaps =async(ID)=>{
+
+      this.props.onFetchCaptions(ID)
       this.clearCaptions()
+      // this.forceUpdate()
+
+      // await clearEm()
+      // await forceIt()
+      // await fetchEm(ID)
+    }
+    if(newProps.selections.video.id!==this.state.currentID){
+      // console.log(captions);
+      const newID = newProps.selections.video.id
+      this.selectVid(newProps.selections.video)
+      newCaps(newID)
+      // this.clearCaptions()
+      // this.props.onFetchCaptions(newID)
+      this.setState({currentID:newID, captionsOn:false})
+
+      if(video.textTracks){if(video.textTracks[0]){
+      video.textTracks[0].mode="hidden"
+    }}
     }
     if(captions.data){
       if(captions.data[0]){
@@ -60,7 +95,7 @@ class FullScreenPlayer extends Component {
           const textTrack = {kind:track.type,src:track.link,lang:track.language}
           if(video.textTracks){if(video.textTracks[0]){
             if(this.state.captionsOn){
-              video.textTracks[0].mode==="hidden"  ? video.textTracks[0].mode = "showing" : video.textTracks[0].mode==="hidden"
+              video.textTracks[0].mode==="hidden"  ? video.textTracks[0].mode = "showing" : video.textTracks[0].mode = "hidden"
             }
             this.setState({textTrack:textTrack})
           }}
@@ -134,25 +169,24 @@ class FullScreenPlayer extends Component {
     const { captions } = this.props.data.video
     const { video } = this.refs.player.video
     const {id} = this.props.data.selections.video
+    this.setState({tracks:[0]})
     if(typeof this.state.textTrack.src !== 'string'){
       this.props.onFetchCaptions(id)
       this.setState({captionsOn:true})
     } else {
       if(video.textTracks[0]){
-        video.textTracks[0].mode==="showing"  ? video.textTracks[0].mode = "hidden" : video.textTracks[0].mode = "showing"
+        video.textTracks[0].mode=="showing" ? video.textTracks[0].mode="hidden" : video.textTracks[0].mode="showing"
       }
     }
   }
   clearCaptions(){
+    console.log('cleared');
     const { video } = this.refs.player.video
     const {id} = this.props.data.selections.video
     if(typeof this.state.textTrack.src=='string'){
-      this.setState({textTrack:{kind:{},lang:{},src:{}},captionsOn:false})
+      this.setState({textTrack:{kind:{},lang:{},src:{}},captionsOn:false, tracks:[]})
       if(video.textTracks){if(video.textTracks[0]){
         video.textTracks[0].mode="hidden"
-        if(this.props.data.video.captionsAvail==true){
-          this.props.onFetchCaptions(id)
-        }
       }}
     }
   }
@@ -199,15 +233,17 @@ class FullScreenPlayer extends Component {
               poster={this.props.thumb}
               captions={captions} src={mp4.link} autoPlay
               crossOrigin="anonymous">
-              <track
-                ref='trackElement'
-                id="track"
-                className="text-track"
-                label="default"
-                kind={textTrack.kind}
-                srcLang={textTrack.lang}
-                src={textTrack.src}
-                default/>
+              {this.state.tracks.map(txttrack=>(
+                <track
+                  key={textTrack.src}
+                  id={textTrack.src}
+                  className="text-track"
+                  label={textTrack.src}
+                  kind={textTrack.kind}
+                  srcLang={textTrack.lang}
+                  src={textTrack.src}
+                  default/>
+              ))}
               <LoadingSpinner/>
             </Player>
           <ReactCSSTransitionGroup component='div'

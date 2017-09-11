@@ -73,8 +73,10 @@ class App extends Component {
               onSelectKioskSet={this.props.onSelectKioskSet}
             />)}}/>
           <Route render={({location,history,match})=>{return(
-            <div><Route exact path="/videos" render={()=>{return(
-              <FullScreenPlayer set={set}
+            <div><Route key={location.key} path="/videos/:video" render={()=>{return(
+              <FullScreenPlayer
+                key={location.key}
+                set={set}
                 selections={selections}
                 category={category} navOpen={this.state.showIndex}
                 showHeader={this.showHeader} hideHeader={this.hideHeader}

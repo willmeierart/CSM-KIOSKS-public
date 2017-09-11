@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {CC, Volume, Prev, Next} from '../Structure/icons'
 import {FaChevronUp} from 'react-icons/lib/fa'
-import {binder} from '../../utils'
+import {binder, URLformat } from '../../utils'
 import VolumeSlider from './VideoVolumeSlider'
 import Scrubber from './VidTimeScrubber'
 
@@ -71,7 +71,7 @@ export default class Controls extends Component {
                 {exists(this.state.prevVid) &&
                   <Link className="link"
                     onClick={(e)=>{this.selectVideo(this.state.prevVid)}}
-                    to='/videos'
+                    to={`/videos/${URLformat(this.state.prevVid.title)}`}
                     rel="prev">
                     <Prev prevVid={this.prevVideo}/>
                   </Link>
@@ -79,7 +79,7 @@ export default class Controls extends Component {
                 &nbsp; <strong>{parseInt(this.state.index,10)+1}</strong> / {this.props.validVids.length}&nbsp;
                 {exists(this.state.nextVid) &&
                   <Link className="link"
-                    to='/videos'
+                    to={`/videos/${URLformat(this.state.nextVid.title)}`}
                     onClick={(e)=>{this.selectVideo(this.state.nextVid)}}
                     rel="next">
                     <Next nextVid={this.nextVideo}/>

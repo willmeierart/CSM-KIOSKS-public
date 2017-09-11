@@ -21,10 +21,12 @@ class Index extends Component {
     })
   }
   goToVideo(vid){
+    const URL = URLformat(vid.data[0].title)
     this.props.hideNav()
     this.props.onSelectCategory(vid.category)
     this.props.onSelectVideo(vid.data[0])
-    this.props.history.push('/videos')
+    this.props.history.push(`/videos/${URL}`)
+    console.log(URL);
   }
   renderDataRows(){
     const bigVidList = []

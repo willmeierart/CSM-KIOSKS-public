@@ -23,9 +23,9 @@ export default class FrontPage extends Component{
     w/h < 1920/1080
       ? fillScreen=['height','100vh','width',`${ratioW}vh`,'left',`${(w-(ratioW*h/100))/2}`]
       : fillScreen=['width','100vw','height',`${ratioH}vw`,'top',`${(h-(ratioH*w/100))/2}`]
-    // const {backgroundvideo} = this.props.set
-    // const url = backgroundvideo.split('/')
-    // const bgID = url[url.length-1]
+    const {backgroundvideo} = this.props.set
+    const url = backgroundvideo.split('/')
+    const bgID = url[url.length-1]
     const bgVidStyles={
       position:'absolute',
       top:'0 !important',
@@ -39,8 +39,10 @@ export default class FrontPage extends Component{
         <div className="fullsize-container" style={{position:'relative'}}>
           <iframe className="backgroundvideo"
             title="BackgroundVideo"
-            src={`https://player.vimeo.com/video/230292141?api=1&background=1`}
-        // src={`https://player.vimeo.com/video/${bgID}?api=1&background=1`}
+
+            // {/*src={`https://player.vimeo.com/video/230292141?api=1&background=1`}*/}
+
+            src={`https://player.vimeo.com/video/${bgID}?api=1&background=1`}
             style={bgVidStyles} frameBorder="0"/>
           <div style={{width:'100%',height:'100%',position:'absolute',top:0}}>
           <FrontPageList {...this.props}/>

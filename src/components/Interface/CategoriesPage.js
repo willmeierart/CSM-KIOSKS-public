@@ -21,7 +21,7 @@ class CategoriesPage extends Component{
   }
   componentWillMount(){this.getNumThumbs()}
   componentDidMount(){this.getNumThumbs()}
-  resetRange(){this.setState({range:[1,6]})}
+  resetRange(){this.setState({range:[1,6], top:true, bottom:false})}
   showButtons(bool){this.setState({showButtons:bool})}
   getNumThumbs(){
     const {videos} = this.props.category

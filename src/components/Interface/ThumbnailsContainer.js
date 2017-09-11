@@ -10,6 +10,7 @@ export default class ThumbnailsContainer extends Component {
   componentWillReceiveProps(nextProps){
     if(nextProps.category!==this.props.category){
       this.updateButtons()
+      this.props.resetRange()
     }
   }
   updateButtons(){
